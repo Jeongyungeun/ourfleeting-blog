@@ -1,0 +1,70 @@
+---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
+import FormattedDate from "./FormattedDate.astro";
+
+interface Props {
+	title: string;
+	body: string;
+	href: string;
+	image?: ImageMetadata;
+	date?: Date;
+}
+
+const { href, title, body, image, date } = Astro.props;
+---
+
+<li class="list-none h-full">
+	<a href={href} class="block h-full card group overflow-hidden relative">
+		{
+			image && (
+				<div class="aspect-video w-full overflow-hidden rounded-2xl mb-4 bg-slate-100">
+					<Image
+						src={image}
+						alt=""
+						width={720}
+						height={360}
+						class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+					/>
+				</div>
+			)
+		}
+		<div class="flex flex-col h-full">
+			<div class="flex items-center gap-2 mb-3">
+				{
+					date && (
+						<span class="text-xs font-medium text-primary-600 bg-primary-50 px-2.5 py-1 rounded-full">
+							<FormattedDate date={date} />
+						</span>
+					)
+				}
+			</div>
+			<h3
+				class="text-xl font-bold text-slate-800 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2"
+			>
+				{title}
+			</h3>
+			<p
+				class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow"
+			>
+				{body}
+			</p>
+			<div
+				class="flex items-center text-sm font-medium text-primary-600 mt-auto group-hover:translate-x-1 transition-transform"
+			>
+				Read more
+				<svg
+					xmlns="http://www.w3.org/2000/svg"
+					class="h-4 w-4 ml-1"
+					viewBox="0 0 20 20"
+					fill="currentColor"
+				>
+					<path
+						fill-rule="evenodd"
+						d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+						clip-rule="evenodd"></path>
+				</svg>
+			</div>
+		</div>
+	</a>
+</li>

@@ -1,0 +1,85 @@
+---
+import { getCollection } from "astro:content";
+import Layout from "../../../layouts/Layout.astro";
+import Card from "../../../components/Card.astro";
+
+export async function getStaticPaths() {
+	const allPosts = await getCollection("blog");
+
+	// 카테고리 추출
+	function getCategory(postId: string): string {
+		const parts = postId.split("/");
+		return parts.length > 1 ? parts[0] : "uncategorized";
+	}
+
+	// 모든 카테고리 목록
+	const categories = [...new Set(allPosts.map(post => getCategory(post.id)))];
+
+	// 각 카테고리별로 경로 생성
+	return categories.map(category => ({
+		params: { category },
+		props: {
+			category,
+			posts: allPosts.filter(post => getCategory(post.id) === category)
+				.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+		}
+	}));
+}
+
+const { category, posts } = Astro.props;
+
+// 카테고리 이름 표시용
+const categoryLabels: Record<string, string> = {
+	life: "Life",
+	family: "Family",
+	friends: "Friends",
+};
+
+const categories = ["all", "life", "family", "friends"];
+---
+
+<Layout title={`${categoryLabels[category] || category} - Blog`}>
+	<section class="py-8">
+		<h1 class="text-4xl font-bold text-slate-900 mb-8 text-center">
+			블로그
+		</h1>
+
+		<!-- 카테고리 필터 탭 -->
+		<div class="flex gap-2 mb-10 overflow-x-auto pb-2 justify-center flex-wrap">
+			{categories.map((cat) => (
+				<a
+					href={cat === "all" ? "/blog" : `/blog/category/${cat}`}
+					class:list={[
+						"px-5 py-2.5 rounded-full font-medium transition-all whitespace-nowrap",
+						category === cat
+							? "bg-primary-600 text-white shadow-lg shadow-primary-500/30 scale-105"
+							: "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:scale-105",
+					]}
+				>
+					{cat === "all" ? "전체" : categoryLabels[cat] || cat}
+				</a>
+			))}
+		</div>
+
+		<!-- 포스트 목록 -->
+		{posts.length > 0 ? (
+			<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				{posts.map((post) => (
+					<Card
+						title={post.data.title}
+						date={post.data.pubDate}
+						body={post.data.description}
+						href={`/blog/${post.id}/`}
+						image={post.data.heroImage}
+					/>
+				))}
+			</ul>
+		) : (
+			<div class="text-center py-16">
+				<p class="text-xl text-slate-600">
+					이 카테고리에 포스트가 없습니다.
+				</p>
+			</div>
+		)}
+	</section>
+</Layout>

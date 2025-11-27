@@ -1,0 +1,241 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import { Image } from "astro:assets";
+
+const projects = (await getCollection("projects")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// 그라데이션 색상 배열
+const gradients = [
+	"from-purple-400 via-pink-500 to-red-500",
+	"from-blue-400 via-cyan-500 to-teal-500",
+	"from-orange-400 via-red-500 to-pink-500",
+	"from-green-400 via-emerald-500 to-cyan-500",
+	"from-indigo-400 via-purple-500 to-pink-500",
+];
+
+function getGradient(index: number) {
+	return gradients[index % gradients.length];
+}
+---
+
+<Layout title="Projects">
+	<section class="py-16 relative overflow-hidden">
+		<!-- 배경 애니메이션 -->
+		<div class="absolute inset-0 -z-10 overflow-hidden">
+			<div
+				class="absolute top-20 right-10 w-72 h-72 bg-primary-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"
+			>
+			</div>
+			<div
+				class="absolute top-40 left-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"
+			>
+			</div>
+			<div
+				class="absolute -bottom-8 left-40 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"
+			>
+			</div>
+		</div>
+
+		<div class="max-w-6xl mx-auto relative">
+			<!-- 헤더 -->
+			<div class="mb-12 space-y-4">
+				<h1
+					class="text-4xl md:text-6xl font-bold text-slate-900 mb-4 animate-gradient-x bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-primary-600 to-slate-900"
+					style="background-size: 200% 200%;"
+				>
+					Projects
+				</h1>
+				<p class="text-lg text-slate-600 max-w-2xl">
+					제가 작업한 프로젝트들을 소개합니다.
+				</p>
+			</div>
+
+			<!-- Bento Grid -->
+			<div
+				class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 auto-rows-fr"
+			>
+				{
+					projects.map((project, index) => {
+						// 패턴: 첫 번째는 2열, 3번째마다 2열 차지
+						const isLarge = index === 0 || index % 5 === 2;
+
+						return (
+							<article
+								class:list={[
+									"card group h-full flex flex-col overflow-hidden relative",
+									"transform transition-all duration-500",
+									"hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary-500/20",
+									{ "md:col-span-2": isLarge },
+								]}
+								style={`animation-delay: ${index * 0.1}s`}
+							>
+								{/* 배경 그라데이션 */}
+								<div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-10">
+									<div
+										class:list={[
+											"absolute inset-0 bg-gradient-to-br opacity-5",
+											getGradient(index),
+										]}
+									/>
+								</div>
+
+								{/* 이미지 */}
+								{project.data.heroImage && (
+									<div
+										class:list={[
+											"w-full overflow-hidden rounded-2xl mb-6 bg-slate-100",
+											isLarge
+												? "aspect-[16/9]"
+												: "aspect-square md:aspect-video",
+										]}
+									>
+										<Image
+											src={project.data.heroImage}
+											alt={project.data.title}
+											width={isLarge ? 1200 : 800}
+											height={isLarge ? 675 : 450}
+											class="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 group-hover:rotate-1"
+										/>
+									</div>
+								)}
+
+								{/* 내용 */}
+								<div class="flex-grow">
+									<h2
+										class:list={[
+											"font-bold text-slate-800 mb-3",
+											"group-hover:text-primary-600 transition-colors",
+											isLarge ? "text-3xl" : "text-2xl",
+										]}
+									>
+										{project.data.title}
+									</h2>
+									<p
+										class:list={[
+											"text-slate-600 leading-relaxed mb-4",
+											isLarge
+												? "text-base"
+												: "text-sm line-clamp-3",
+										]}
+									>
+										{project.data.description}
+									</p>
+
+									{/* 태그 */}
+									{project.data.tags && (
+										<div class="flex flex-wrap gap-2 mb-6">
+											{project.data.tags.map(
+												(tag, i) => (
+													<span
+														class="px-3 py-1 text-xs font-medium bg-primary-50 text-primary-700 rounded-full transform transition-transform hover:scale-110"
+														style={`animation-delay: ${i * 100}ms`}
+													>
+														{tag}
+													</span>
+												),
+											)}
+										</div>
+									)}
+								</div>
+
+								{/* 버튼 그룹 */}
+								<div class="flex gap-3 mt-auto">
+									<a
+										href={`/projects/${project.id}/`}
+										class="flex-1 text-center px-4 py-2.5 bg-primary-600 text-white rounded-xl font-medium hover:bg-primary-700 transition-all transform hover:scale-105 shadow-lg shadow-primary-500/30"
+									>
+										자세히 보기
+									</a>
+									{project.data.github && (
+										<a
+											href={project.data.github}
+											target="_blank"
+											class="px-4 py-2.5 border-2 border-slate-300 text-slate-700 rounded-xl font-medium hover:border-slate-900 hover:bg-slate-900 hover:text-white transition-all transform hover:scale-105 flex items-center gap-2"
+										>
+											<svg
+												class="w-5 h-5"
+												fill="currentColor"
+												viewBox="0 0 24 24"
+											>
+												<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+											</svg>
+										</a>
+									)}
+									{project.data.demo && (
+										<a
+											href={project.data.demo}
+											target="_blank"
+											class="px-4 py-2.5 border-2 border-slate-300 text-slate-700 rounded-xl font-medium hover:border-primary-600 hover:bg-primary-600 hover:text-white transition-all transform hover:scale-105"
+										>
+											Demo
+										</a>
+									)}
+								</div>
+							</article>
+						);
+					})
+				}
+			</div>
+		</div>
+	</section>
+</Layout>
+
+<style>
+	@keyframes blob {
+		0%,
+		100% {
+			transform: translate(0px, 0px) scale(1);
+		}
+		33% {
+			transform: translate(30px, -50px) scale(1.1);
+		}
+		66% {
+			transform: translate(-20px, 20px) scale(0.9);
+		}
+	}
+
+	.animate-blob {
+		animation: blob 7s infinite;
+	}
+
+	.animation-delay-2000 {
+		animation-delay: 2s;
+	}
+
+	.animation-delay-4000 {
+		animation-delay: 4s;
+	}
+
+	@keyframes gradient-x {
+		0%,
+		100% {
+			background-position: 0% 50%;
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+	}
+
+	.animate-gradient-x {
+		animation: gradient-x 3s ease infinite;
+	}
+
+	/* 카드 순차 등장 애니메이션 */
+	@keyframes fadeInUp {
+		from {
+			opacity: 0;
+			transform: translateY(30px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
+	}
+
+	article {
+		animation: fadeInUp 0.6s ease-out backwards;
+	}
+</style>
