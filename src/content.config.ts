@@ -29,6 +29,18 @@ const projects = defineCollection({
   })
 })
 
+const marketing = defineCollection({
+  loader: glob({ base: './src/content/marketing', pattern: '**/*.{md,mdx}' }),
+  schema: ({ image }) => z.object({
+    title: z.string(),
+    description: z.string(),
+    pubDate: z.coerce.date(),
+    updatedDate: z.coerce.date().optional(),
+    heroImage: image().optional(),
+    tags: z.array(z.string()).optional(),
+  })
+})
+
 export const collections = {
-  blog,projects
- };
+  blog, projects, marketing
+};
