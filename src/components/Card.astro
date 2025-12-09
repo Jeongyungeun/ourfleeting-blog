@@ -9,16 +9,51 @@ interface Props {
 	href: string;
 	image?: ImageMetadata;
 	date?: Date;
+	category?: 'blog' | 'projects' | 'marketing' | 'family' | 'life';
+	variant?: 'default' | 'purple' | 'mint' | 'yellow' | 'pink';
 }
 
-const { href, title, body, image, date } = Astro.props;
+const { href, title, body, image, date, category, variant = 'default' } = Astro.props;
+
+const variantClasses: Record<string, string> = {
+	default: 'bg-white',
+	purple: 'bg-[#E8D5FF]',
+	mint: 'bg-[#D5F5E3]',
+	yellow: 'bg-[#FFF9DB]',
+	pink: 'bg-[#FFE4E1]',
+};
+
+// 카테고리별 태그 클래스
+const categoryTagClasses: Record<string, string> = {
+	blog: 'category-tag category-tag-blog',
+	projects: 'category-tag category-tag-projects',
+	marketing: 'category-tag category-tag-marketing',
+	family: 'category-tag category-tag-family',
+	life: 'category-tag category-tag-life',
+};
+
+// 카테고리 라벨
+const categoryLabels: Record<string, string> = {
+	blog: 'Blog',
+	projects: 'Projects',
+	marketing: 'Marketing',
+	family: 'Family',
+	life: 'Life',
+};
 ---
 
 <li class="list-none h-full">
-	<a href={href} class="block h-full card group overflow-hidden relative">
+	<a
+		href={href}
+		class:list={[
+			"block h-full rounded-3xl overflow-hidden transition-all duration-300 group p-6",
+			variantClasses[variant],
+			"hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.08)]"
+		]}
+	>
 		{
 			image && (
-				<div class="aspect-video w-full overflow-hidden rounded-2xl mb-4 bg-slate-100">
+				<div class="aspect-video w-full overflow-hidden rounded-2xl mb-4 bg-slate-100 relative">
 					<Image
 						src={image}
 						alt=""
@@ -26,31 +61,45 @@ const { href, title, body, image, date } = Astro.props;
 						height={360}
 						class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
 					/>
+					{/* 이미지 위 카테고리 태그 */}
+					{category && (
+						<div class="absolute top-3 left-3">
+							<span class={categoryTagClasses[category]}>
+								{categoryLabels[category]}
+							</span>
+						</div>
+					)}
 				</div>
 			)
 		}
 		<div class="flex flex-col h-full">
-			<div class="flex items-center gap-2 mb-3">
+			<div class="flex items-center gap-3 mb-3 flex-wrap">
+				{/* 이미지 없을 때 카테고리 태그 표시 */}
+				{!image && category && (
+					<span class={categoryTagClasses[category]}>
+						{categoryLabels[category]}
+					</span>
+				)}
 				{
 					date && (
-						<span class="text-xs font-medium text-primary-600 bg-primary-50 px-2.5 py-1 rounded-full">
+						<span class="text-xs font-medium text-[#6B7280] bg-white/80 px-3 py-1.5 rounded-full border border-gray-200">
 							<FormattedDate date={date} />
 						</span>
 					)
 				}
 			</div>
 			<h3
-				class="text-xl font-bold text-slate-800 mb-2 group-hover:text-primary-600 transition-colors line-clamp-2"
+				class="text-xl font-bold text-[#1A1A2E] mb-2 group-hover:opacity-80 transition-opacity line-clamp-2"
 			>
 				{title}
 			</h3>
 			<p
-				class="text-slate-600 text-sm leading-relaxed line-clamp-3 mb-4 flex-grow"
+				class="text-[#6B7280] text-sm leading-relaxed line-clamp-3 mb-4 flex-grow"
 			>
 				{body}
 			</p>
 			<div
-				class="flex items-center text-sm font-medium text-primary-600 mt-auto group-hover:translate-x-1 transition-transform"
+				class="flex items-center text-sm font-medium text-[#1A1A2E] mt-auto group-hover:translate-x-1 transition-transform"
 			>
 				Read more
 				<svg

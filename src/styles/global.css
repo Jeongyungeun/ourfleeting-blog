@@ -2,51 +2,346 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-primary-50: #f0fdfa;
-  --color-primary-100: #ccfbf1;
-  --color-primary-200: #99f6e4;
-  --color-primary-300: #5eead4;
-  --color-primary-400: #2dd4bf;
-  --color-primary-500: #14b8a6;
-  --color-primary-600: #0d9488;
-  --color-primary-700: #0f766e;
-  --color-primary-800: #115e59;
-  --color-primary-900: #134e4a;
-  --color-primary-950: #042f2e;
+  /* 새로운 색상 시스템 */
+  --color-primary: #1A1A2E;
+  --color-accent-purple: #E8D5FF;
+  --color-accent-mint: #D5F5E3;
+  --color-accent-yellow: #FFF9DB;
+  --color-accent-pink: #FFE4E1;
 
   --color-surface: #ffffff;
-  --color-background: #f8fafc;
+  --color-background: #FAFAFA;
+  --color-text: #1A1A2E;
+  --color-text-muted: #6B7280;
 
   --font-sans: 'Inter', sans-serif;
 
   --radius-4xl: 2rem;
 
   --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --shadow-glow: 0 0 15px rgba(45, 212, 191, 0.3);
+  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 @layer components {
+  /* 기본 카드 */
   .card {
-    @apply bg-surface rounded-3xl shadow-soft p-6 transition-all duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply bg-surface rounded-3xl shadow-soft p-6 transition-all duration-300;
   }
 
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* Bento Grid 레이아웃 */
+  .bento-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(12, 1fr);
+    grid-auto-rows: minmax(120px, auto);
+  }
+
+  .bento-large {
+    grid-column: span 5;
+    grid-row: span 3;
+  }
+
+  .bento-medium {
+    grid-column: span 4;
+    grid-row: span 3;
+  }
+
+  .bento-small {
+    grid-column: span 3;
+    grid-row: span 1;
+  }
+
+  .bento-wide {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+
+  .bento-categories {
+    grid-column: span 4;
+    grid-row: span 2;
+  }
+
+  /* Bento 카드 스타일 */
+  .bento-card {
+    @apply bg-surface rounded-3xl overflow-hidden relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .bento-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* 파스텔 배경 카드 */
+  .card-purple { background: var(--color-accent-purple); }
+  .card-mint { background: var(--color-accent-mint); }
+  .card-yellow { background: var(--color-accent-yellow); }
+  .card-pink { background: var(--color-accent-pink); }
+
+  /* 카드 내 이미지 스타일 */
+  .bento-card .card-image {
+    @apply w-full h-full object-cover;
+    transition: transform 0.5s ease;
+  }
+
+  .bento-card:hover .card-image {
+    transform: scale(1.05);
+  }
+
+  /* 이미지 오버레이 */
+  .card-overlay {
+    @apply absolute bottom-0 left-0 right-0 p-6 text-white;
+    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  }
+
+  /* 카테고리 태그 - 기본 (이미지 위 오버레이용) */
+  .category-tag {
+    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full shadow-md;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s ease;
+  }
+
+  .category-tag:hover {
+    transform: scale(1.05);
+  }
+
+  /* 카테고리별 색상 - Blog */
+  .category-tag-blog {
+    background: var(--color-accent-purple);
+    color: #6B21A8;
+    border: 2px solid #6B21A8;
+  }
+
+  /* 카테고리별 색상 - Projects */
+  .category-tag-projects {
+    background: var(--color-accent-mint);
+    color: #047857;
+    border: 2px solid #047857;
+  }
+
+  /* 카테고리별 색상 - Marketing */
+  .category-tag-marketing {
+    background: var(--color-accent-pink);
+    color: #BE123C;
+    border: 2px solid #BE123C;
+  }
+
+  /* 카테고리별 색상 - Family */
+  .category-tag-family {
+    background: var(--color-accent-yellow);
+    color: #B45309;
+    border: 2px solid #B45309;
+  }
+
+  /* 카테고리별 색상 - Life */
+  .category-tag-life {
+    background: #E0F2FE;
+    color: #0369A1;
+    border: 2px solid #0369A1;
+  }
+
+  /* 카테고리 태그 (솔리드 버전 - 필터/버튼용) */
+  .category-tag-solid {
+    @apply px-5 py-2.5 text-sm rounded-full font-bold transition-all shadow-sm;
+    border: 2px solid transparent;
+  }
+
+  .category-tag-solid:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  /* 솔리드 카테고리별 색상 */
+  .category-tag-solid-blog {
+    background: var(--color-accent-purple);
+    color: #6B21A8;
+    border-color: #6B21A8;
+  }
+
+  .category-tag-solid-projects {
+    background: var(--color-accent-mint);
+    color: #047857;
+    border-color: #047857;
+  }
+
+  .category-tag-solid-marketing {
+    background: var(--color-accent-pink);
+    color: #BE123C;
+    border-color: #BE123C;
+  }
+
+  .category-tag-solid-family {
+    background: var(--color-accent-yellow);
+    color: #B45309;
+    border-color: #B45309;
+  }
+
+  /* 아이콘 버튼 */
+  .icon-btn {
+    @apply w-10 h-10 rounded-full flex items-center justify-center cursor-pointer;
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
+  }
+
+  .icon-btn:hover {
+    @apply bg-white;
+    transform: scale(1.1);
+  }
+
+  /* 버튼 스타일 */
   .btn-primary {
-    @apply bg-primary-500 text-white px-6 py-3 rounded-full font-medium transition-all hover:bg-primary-600 hover:shadow-glow active:scale-95;
+    @apply px-6 py-3 rounded-full font-medium transition-all;
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .btn-primary:hover {
+    @apply opacity-90 shadow-lg;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 border-2 rounded-full font-medium transition-all;
+    border-color: var(--color-primary);
+    color: var(--color-primary);
+  }
+
+  .btn-outline:hover {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .btn-outline svg {
+    transition: transform 0.2s ease;
+  }
+
+  .btn-outline:hover svg {
+    transform: translateX(4px);
+  }
+
+  /* 제목 스타일 */
+  .title-uppercase {
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 800;
+  }
+
+  /* 필터 버튼 */
+  .filter-btn {
+    @apply px-5 py-2.5 rounded-full font-medium text-sm transition-all cursor-pointer border-none;
+  }
+
+  .filter-btn.active {
+    background: var(--color-primary);
+    color: white;
+  }
+
+  .filter-btn:not(.active) {
+    @apply bg-slate-100;
+    color: var(--color-text);
+  }
+
+  .filter-btn:not(.active):hover {
+    @apply bg-slate-200;
   }
 }
 
 @layer base {
   html {
     font-family: var(--font-sans);
-    @apply bg-background text-slate-800 antialiased;
+    @apply antialiased;
+    background: var(--color-background);
+    color: var(--color-text);
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
+    color: var(--color-text);
   }
+}
+
+/* 반응형 Bento Grid */
+@media (max-width: 1024px) {
+  .bento-large { grid-column: span 6; grid-row: span 2; }
+  .bento-medium { grid-column: span 6; grid-row: span 2; }
+  .bento-small { grid-column: span 6; grid-row: span 1; }
+  .bento-wide { grid-column: span 6; grid-row: span 1; }
+  .bento-categories { grid-column: span 12; grid-row: span 1; }
+}
+
+@media (max-width: 768px) {
+  .bento-grid {
+    grid-template-columns: 1fr;
+  }
+  .bento-large,
+  .bento-medium,
+  .bento-small,
+  .bento-wide,
+  .bento-categories {
+    grid-column: span 1;
+    grid-row: span 1;
+  }
+}
+
+/* 스크롤바 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #999;
+}
+
+/* 애니메이션 */
+.page-transition {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 모바일 메뉴 */
+.mobile-menu {
+  @apply fixed inset-0 z-50;
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+}
+
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+
+.mobile-menu-content {
+  @apply absolute left-0 top-0 bottom-0 w-72 bg-white p-8;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+}
+
+.mobile-menu.open .mobile-menu-content {
+  transform: translateX(0);
 }

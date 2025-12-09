@@ -1,94 +1,228 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/Card.astro";
+import FormattedDate from "../components/FormattedDate.astro";
 import { getCollection } from "astro:content";
 
-const posts = (await getCollection("blog")).sort(
+// 모든 콘텐츠 가져오기
+const blogPosts = (await getCollection("blog")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
+
+const projectPosts = (await getCollection("projects")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+const marketingPosts = (await getCollection("marketing")).sort(
+	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
+);
+
+// Featured (최신 블로그 포스트)
+const featuredPost = blogPosts[0];
+
+// 카테고리별 최신 포스트
+const latestProject = projectPosts[0];
+const latestMarketing = marketingPosts[0];
 ---
 
 <Layout>
-	<!-- Hero Section -->
-	<section class="relative py-20 lg:py-32 overflow-hidden">
-		<div class="absolute inset-0 -z-10">
-			<div
-				class="absolute top-0 right-0 -mr-20 -mt-20 w-96 h-96 rounded-full bg-primary-100 blur-3xl opacity-50"
-			>
-			</div>
-			<div
-				class="absolute bottom-0 left-0 -ml-20 -mb-20 w-80 h-80 rounded-full bg-blue-100 blur-3xl opacity-50"
-			>
-			</div>
-		</div>
+	<div class="max-w-7xl mx-auto px-4 py-8">
+		<!-- Bento Grid Hero Section -->
+		<section class="mb-12">
+			<div class="bento-grid">
+				<!-- Featured Post - Large Card -->
+				{featuredPost && (
+					<a href={`/blog/${featuredPost.id}/`} class="bento-card bento-large group cursor-pointer">
+						{featuredPost.data.heroImage && (
+							<img
+								src={featuredPost.data.heroImage.src}
+								alt={featuredPost.data.title}
+								class="card-image"
+							/>
+						)}
+						<div class="card-overlay">
+							<div class="flex items-center gap-3 mb-3">
+								<span class="category-tag category-tag-blog">Blog</span>
+								<span class="text-sm opacity-80">
+									<FormattedDate date={featuredPost.data.pubDate} />
+								</span>
+							</div>
+							<h2 class="text-2xl md:text-3xl font-bold mb-2">{featuredPost.data.title}</h2>
+							<p class="text-sm opacity-80 line-clamp-2">{featuredPost.data.description}</p>
+						</div>
+					</a>
+				)}
 
-		<div class="text-center max-w-3xl mx-auto">
-			<h1
-				class="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6"
-			>
-				Welcome to <span
-					class="text-transparent bg-clip-text bg-gradient-to-r from-primary-500 to-primary-700"
-					>Our Lifolio</span
-				>
-			</h1>
-			<p class="text-lg md:text-xl text-slate-600 leading-relaxed mb-10">
-				Explore our latest thoughts, tutorials, and insights. Designed
-				with a focus on clarity, aesthetics, and performance.
-			</p>
-			<div class="flex justify-center gap-4">
-				<a
-					href="/blog"
-					class="btn-primary shadow-lg shadow-primary-500/30"
-				>
-					Read the Blog
+				<!-- Projects Card - Medium (파스텔 민트) -->
+				{latestProject && (
+					<a href={`/projects/${latestProject.id}/`} class="bento-card bento-medium card-mint p-6 flex flex-col justify-between group cursor-pointer">
+						<div>
+							<div class="flex items-center justify-between mb-4">
+								<span class="category-tag category-tag-projects">Projects</span>
+							</div>
+							<h3 class="text-xl font-bold text-[#1A1A2E] mb-2">{latestProject.data.title}</h3>
+							<p class="text-sm text-gray-600 line-clamp-2">{latestProject.data.description}</p>
+						</div>
+						{latestProject.data.heroImage && (
+							<div class="mt-4">
+								<img
+									src={latestProject.data.heroImage.src}
+									alt={latestProject.data.title}
+									class="w-full h-40 object-cover rounded-2xl transition-transform duration-300 group-hover:scale-[1.02]"
+								/>
+							</div>
+						)}
+					</a>
+				)}
+
+				<!-- Marketing Card - Small (파스텔 핑크) -->
+				{latestMarketing && (
+					<a href={`/marketing/${latestMarketing.id}/`} class="bento-card bento-small card-pink p-5 flex flex-col justify-center group cursor-pointer">
+						<div class="mb-3">
+							<span class="category-tag category-tag-marketing">Marketing</span>
+						</div>
+						<h4 class="font-bold text-[#1A1A2E] line-clamp-2">{latestMarketing.data.title}</h4>
+					</a>
+				)}
+
+				<!-- Blog Stats - Small (파스텔 노랑) -->
+				<div class="bento-card bento-small card-yellow p-5 flex items-center gap-4">
+					<div class="w-12 h-12 rounded-full bg-white/60 flex items-center justify-center flex-shrink-0">
+						<svg class="w-6 h-6 text-[#1A1A2E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+						</svg>
+					</div>
+					<div>
+						<span class="text-xs font-medium text-[#6B7280]">Total Posts</span>
+						<h4 class="text-2xl font-bold text-[#1A1A2E]">{blogPosts.length + projectPosts.length + marketingPosts.length}</h4>
+					</div>
+				</div>
+
+				<!-- About - Small (파스텔 핑크) -->
+				<a href="/about" class="bento-card bento-small card-pink p-5 flex items-center gap-4 group cursor-pointer">
+					<div class="w-12 h-12 rounded-full bg-white/60 flex items-center justify-center flex-shrink-0">
+						<svg class="w-6 h-6 text-[#1A1A2E]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+							<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+						</svg>
+					</div>
+					<div>
+						<span class="text-xs font-medium text-[#6B7280]">About</span>
+						<h4 class="font-bold text-[#1A1A2E]">우리를 소개합니다</h4>
+					</div>
 				</a>
-				<a
-					href="/about"
-					class="px-6 py-3 rounded-full font-medium text-slate-600 bg-white border border-slate-200 hover:bg-slate-50 transition-colors"
-				>
-					About Us
+
+				<!-- Second Blog Post - Wide Card -->
+				{blogPosts[1] && (
+					<a href={`/blog/${blogPosts[1].id}/`} class="bento-card bento-wide group cursor-pointer overflow-hidden">
+						{blogPosts[1].data.heroImage && (
+							<img
+								src={blogPosts[1].data.heroImage.src}
+								alt={blogPosts[1].data.title}
+								class="card-image"
+							/>
+						)}
+						<div class="card-overlay">
+							<div class="flex items-center gap-3 mb-2">
+								<span class="category-tag category-tag-family">Family</span>
+							</div>
+							<h3 class="text-lg font-bold">{blogPosts[1].data.title}</h3>
+						</div>
+					</a>
+				)}
+
+				<!-- Categories Card -->
+				<div class="bento-card bento-categories bg-white p-6">
+					<h3 class="text-lg font-bold text-[#1A1A2E] mb-4">카테고리</h3>
+					<div class="flex flex-wrap gap-3">
+						<a href="/blog" class="category-tag-solid category-tag-solid-blog">
+							Blog ({blogPosts.length})
+						</a>
+						<a href="/projects" class="category-tag-solid category-tag-solid-projects">
+							Projects ({projectPosts.length})
+						</a>
+						<a href="/marketing" class="category-tag-solid category-tag-solid-marketing">
+							Marketing ({marketingPosts.length})
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Profile + Social Links Section -->
+		<section class="mb-12">
+			<div class="bg-white rounded-3xl p-8 shadow-soft">
+				<div class="flex flex-col md:flex-row items-center gap-8">
+					<!-- Profile -->
+					<div class="flex items-center gap-4">
+						<div class="w-20 h-20 rounded-full bg-gradient-to-br from-[#E8D5FF] to-[#D5F5E3] flex items-center justify-center text-3xl font-bold text-[#1A1A2E]">
+							LF
+						</div>
+						<div>
+							<h3 class="text-xl font-bold text-[#1A1A2E]">Like Flame</h3>
+							<p class="text-[#6B7280]">일상과 프로젝트를 기록합니다</p>
+						</div>
+					</div>
+
+					<!-- Social Links -->
+					<div class="flex gap-4 md:ml-auto">
+						<a
+							href="https://github.com/Jeongyungeun"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#E8D5FF] transition-colors"
+						>
+							<svg class="w-6 h-6 text-[#1A1A2E]" fill="currentColor" viewBox="0 0 24 24">
+								<path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+							</svg>
+						</a>
+						<a
+							href="https://instagram.com/ourfleeting"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="w-12 h-12 rounded-full bg-gray-100 flex items-center justify-center hover:bg-[#FFE4E1] transition-colors"
+						>
+							<svg class="w-6 h-6 text-[#1A1A2E]" fill="currentColor" viewBox="0 0 24 24">
+								<path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd"/>
+							</svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- Latest Posts Section -->
+		<section class="mb-12">
+			<div class="flex items-center justify-between mb-6">
+				<h2 class="text-2xl font-bold text-[#1A1A2E] title-uppercase">Latest Posts</h2>
+				<a href="/blog" class="btn-outline">
+					Read Our Blog
+					<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+					</svg>
 				</a>
 			</div>
-		</div>
-	</section>
 
-	<!-- Featured Posts Grid -->
-	<section class="py-16">
-		<div class="flex items-center justify-between mb-10">
-			<h2 class="text-2xl font-bold text-slate-800">Latest Posts</h2>
-			<a
-				href="/blog"
-				class="text-primary-600 font-medium hover:text-primary-700 flex items-center gap-1"
-			>
-				View all
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					class="h-4 w-4"
-					viewBox="0 0 20 20"
-					fill="currentColor"
-				>
-					<path
-						fill-rule="evenodd"
-						d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
-						clip-rule="evenodd"></path>
-				</svg>
-			</a>
-		</div>
-
-		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{
-				posts
-					.slice(0, 3)
-					.map((post) => (
-						<Card
-							title={post.data.title}
-							date={post.data.pubDate}
-							body={post.data.description}
-							href={`/blog/${post.id}/`}
-							image={post.data.heroImage}
-						/>
-					))
-			}
-		</ul>
-	</section>
+			<ul class="grid grid-cols-1 md:grid-cols-3 gap-6">
+				{
+					blogPosts
+						.slice(0, 3)
+						.map((post, index) => {
+							// 폴더에서 카테고리 추출
+							const postCategory = post.id.split('/')[0] as 'family' | 'life';
+							return (
+								<Card
+									title={post.data.title}
+									date={post.data.pubDate}
+									body={post.data.description}
+									href={`/blog/${post.id}/`}
+									image={post.data.heroImage}
+									category={postCategory}
+									variant={index === 0 ? 'purple' : index === 1 ? 'mint' : 'yellow'}
+								/>
+							);
+						})
+				}
+			</ul>
+		</section>
+	</div>
 </Layout>

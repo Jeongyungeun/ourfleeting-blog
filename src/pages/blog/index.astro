@@ -26,48 +26,74 @@ const categoryLabels: Record<string, string> = {
 	family: "Family",
 	friends: "Friends",
 };
+
+// 필터 버튼 카테고리별 스타일
+const filterButtonStyles: Record<string, string> = {
+	all: "filter-btn active",
+	life: "category-tag-solid category-tag-solid-blog",
+	family: "category-tag-solid category-tag-solid-family",
+	friends: "category-tag-solid category-tag-solid-marketing",
+};
 ---
 
 <Layout title="Blog" description="모든 블로그 포스팅">
-	<section class="py-8">
-		<h1 class="text-4xl font-bold text-slate-900 mb-8 text-center">
-			블로그
-		</h1>
+	<div class="max-w-7xl mx-auto px-4 py-8">
+		<section class="py-8">
+			<h1 class="text-4xl font-bold text-[#1A1A2E] mb-8 text-center title-uppercase">
+				Blog
+			</h1>
 
-		<!-- 카테고리 필터 탭 -->
-		<div
-			class="flex gap-2 mb-10 overflow-x-auto pb-2 justify-center flex-wrap"
-		>
-			{
-				categories.map((cat) => (
-					<a
-						href={cat === "all" ? "/blog" : `/blog/category/${cat}`}
-						class:list={[
-							"px-5 py-2.5 rounded-full font-medium transition-all whitespace-nowrap",
-							cat === "all"
-								? "bg-primary-600 text-white shadow-lg shadow-primary-500/30 scale-105"
-								: "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:scale-105",
-						]}
-					>
-						{categoryLabels[cat] || cat}
-					</a>
-				))
-			}
-		</div>
+			<!-- 카테고리 필터 탭 -->
+			<div class="flex gap-3 mb-10 overflow-x-auto pb-2 justify-center flex-wrap">
+				{
+					categories.map((cat) => {
+						const isActive = cat === "all";
+						let btnClass = "";
 
-		<!-- 포스트 목록 -->
-		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{
-				allPosts.map((post) => (
-					<Card
-						title={post.data.title}
-						date={post.data.pubDate}
-						body={post.data.description}
-						href={`/blog/${post.id}/`}
-						image={post.data.heroImage}
-					/>
-				))
-			}
-		</ul>
-	</section>
+						if (isActive) {
+							btnClass = "filter-btn active";
+						} else if (cat === "family") {
+							btnClass = "category-tag-solid category-tag-solid-family";
+						} else if (cat === "life") {
+							btnClass = "category-tag-solid category-tag-solid-blog";
+						} else {
+							btnClass = "category-tag-solid category-tag-solid-marketing";
+						}
+
+						return (
+							<a
+								href={cat === "all" ? "/blog" : `/blog/category/${cat}`}
+								class={btnClass}
+							>
+								{categoryLabels[cat] || cat}
+							</a>
+						);
+					})
+				}
+			</div>
+
+			<!-- 포스트 목록 -->
+			<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+				{
+					allPosts.map((post, index) => {
+						const variants = ['purple', 'mint', 'yellow', 'pink'] as const;
+						const variant = variants[index % variants.length];
+						const postCategory = getCategory(post.id) as 'family' | 'life';
+
+						return (
+							<Card
+								title={post.data.title}
+								date={post.data.pubDate}
+								body={post.data.description}
+								href={`/blog/${post.id}/`}
+								image={post.data.heroImage}
+								category={postCategory}
+								variant={variant}
+							/>
+						);
+					})
+				}
+			</ul>
+		</section>
+	</div>
 </Layout>
