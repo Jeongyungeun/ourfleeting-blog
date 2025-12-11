@@ -1,267 +1,76 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
-  /* 새로운 색상 시스템 */
-  --color-primary: #1A1A2E;
-  --color-accent-purple: #E8D5FF;
-  --color-accent-mint: #D5F5E3;
-  --color-accent-yellow: #FFF9DB;
-  --color-accent-pink: #FFE4E1;
-
-  --color-surface: #ffffff;
-  --color-background: #FAFAFA;
-  --color-text: #1A1A2E;
-  --color-text-muted: #6B7280;
-
-  --font-sans: 'Inter', sans-serif;
-
-  --radius-4xl: 2rem;
-
-  --shadow-soft: 0 4px 20px -2px rgba(0, 0, 0, 0.05);
-  --shadow-hover: 0 20px 40px rgba(0, 0, 0, 0.08);
+/* 커스텀 유틸리티 클래스 */
+@utility tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  transition: all 0.2s;
 }
 
-@layer components {
-  /* 기본 카드 */
-  .card {
-    @apply bg-surface rounded-3xl shadow-soft p-6 transition-all duration-300;
-  }
+@utility tag-work {
+  background-color: #ecfdf5;
+  color: #047857;
+}
 
-  .card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-  }
+@utility tag-family {
+  background-color: #fffbeb;
+  color: #b45309;
+}
 
-  /* Bento Grid 레이아웃 */
-  .bento-grid {
-    display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(12, 1fr);
-    grid-auto-rows: minmax(120px, auto);
-  }
+@utility tag-life {
+  background-color: #eef2ff;
+  color: #4338ca;
+}
 
-  .bento-large {
-    grid-column: span 5;
-    grid-row: span 3;
-  }
+@utility tag-projects {
+  background-color: #fdf2f8;
+  color: #be185d;
+}
 
-  .bento-medium {
-    grid-column: span 4;
-    grid-row: span 3;
-  }
+@utility tag-marketing {
+  background-color: #f5f3ff;
+  color: #7c3aed;
+}
 
-  .bento-small {
-    grid-column: span 3;
-    grid-row: span 1;
-  }
+@theme {
+  /* 색상 시스템 - 모던하고 깔끔한 톤 */
+  --color-primary: #18181B;
+  --color-primary-light: #3F3F46;
+  --color-accent: #6366F1;
+  --color-accent-light: #818CF8;
 
-  .bento-wide {
-    grid-column: span 4;
-    grid-row: span 2;
-  }
+  --color-surface: #ffffff;
+  --color-surface-secondary: #F4F4F5;
+  --color-background: #FAFAFA;
+  --color-text: #18181B;
+  --color-text-secondary: #71717A;
+  --color-text-muted: #A1A1AA;
+  --color-border: #E4E4E7;
 
-  .bento-categories {
-    grid-column: span 4;
-    grid-row: span 2;
-  }
+  /* 카테고리 컬러 */
+  --color-cat-work: #10B981;
+  --color-cat-family: #F59E0B;
+  --color-cat-life: #6366F1;
+  --color-cat-projects: #EC4899;
+  --color-cat-marketing: #8B5CF6;
 
-  /* Bento 카드 스타일 */
-  .bento-card {
-    @apply bg-surface rounded-3xl overflow-hidden relative;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
 
-  .bento-card:hover {
-    transform: translateY(-4px);
-    box-shadow: var(--shadow-hover);
-  }
+  --radius-sm: 0.5rem;
+  --radius-md: 0.75rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+  --radius-2xl: 2rem;
 
-  /* 파스텔 배경 카드 */
-  .card-purple { background: var(--color-accent-purple); }
-  .card-mint { background: var(--color-accent-mint); }
-  .card-yellow { background: var(--color-accent-yellow); }
-  .card-pink { background: var(--color-accent-pink); }
-
-  /* 카드 내 이미지 스타일 */
-  .bento-card .card-image {
-    @apply w-full h-full object-cover;
-    transition: transform 0.5s ease;
-  }
-
-  .bento-card:hover .card-image {
-    transform: scale(1.05);
-  }
-
-  /* 이미지 오버레이 */
-  .card-overlay {
-    @apply absolute bottom-0 left-0 right-0 p-6 text-white;
-    background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-  }
-
-  /* 카테고리 태그 - 기본 (이미지 위 오버레이용) */
-  .category-tag {
-    @apply inline-flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-full shadow-md;
-    backdrop-filter: blur(8px);
-    transition: all 0.2s ease;
-  }
-
-  .category-tag:hover {
-    transform: scale(1.05);
-  }
-
-  /* 카테고리별 색상 - Blog */
-  .category-tag-blog {
-    background: var(--color-accent-purple);
-    color: #6B21A8;
-    border: 2px solid #6B21A8;
-  }
-
-  /* 카테고리별 색상 - Projects */
-  .category-tag-projects {
-    background: var(--color-accent-mint);
-    color: #047857;
-    border: 2px solid #047857;
-  }
-
-  /* 카테고리별 색상 - Marketing */
-  .category-tag-marketing {
-    background: var(--color-accent-pink);
-    color: #BE123C;
-    border: 2px solid #BE123C;
-  }
-
-  /* 카테고리별 색상 - Family */
-  .category-tag-family {
-    background: var(--color-accent-yellow);
-    color: #B45309;
-    border: 2px solid #B45309;
-  }
-
-  /* 카테고리별 색상 - Life */
-  .category-tag-life {
-    background: #E0F2FE;
-    color: #0369A1;
-    border: 2px solid #0369A1;
-  }
-
-  /* 카테고리별 색상 - Work */
-  .category-tag-work {
-    background: #DCFCE7;
-    color: #166534;
-    border: 2px solid #166534;
-  }
-
-  /* 카테고리 태그 (솔리드 버전 - 필터/버튼용) */
-  .category-tag-solid {
-    @apply px-5 py-2.5 text-sm rounded-full font-bold transition-all shadow-sm;
-    border: 2px solid transparent;
-  }
-
-  .category-tag-solid:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  }
-
-  /* 솔리드 카테고리별 색상 */
-  .category-tag-solid-blog {
-    background: var(--color-accent-purple);
-    color: #6B21A8;
-    border-color: #6B21A8;
-  }
-
-  .category-tag-solid-projects {
-    background: var(--color-accent-mint);
-    color: #047857;
-    border-color: #047857;
-  }
-
-  .category-tag-solid-marketing {
-    background: var(--color-accent-pink);
-    color: #BE123C;
-    border-color: #BE123C;
-  }
-
-  .category-tag-solid-family {
-    background: var(--color-accent-yellow);
-    color: #B45309;
-    border-color: #B45309;
-  }
-
-  .category-tag-solid-work {
-    background: #DCFCE7;
-    color: #166534;
-    border-color: #166534;
-  }
-
-  /* 아이콘 버튼 */
-  .icon-btn {
-    @apply w-10 h-10 rounded-full flex items-center justify-center cursor-pointer;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(4px);
-    transition: all 0.2s ease;
-  }
-
-  .icon-btn:hover {
-    @apply bg-white;
-    transform: scale(1.1);
-  }
-
-  /* 버튼 스타일 */
-  .btn-primary {
-    @apply px-6 py-3 rounded-full font-medium transition-all;
-    background: var(--color-primary);
-    color: white;
-  }
-
-  .btn-primary:hover {
-    @apply opacity-90 shadow-lg;
-  }
-
-  .btn-outline {
-    @apply inline-flex items-center gap-2 px-6 py-3 border-2 rounded-full font-medium transition-all;
-    border-color: var(--color-primary);
-    color: var(--color-primary);
-  }
-
-  .btn-outline:hover {
-    background: var(--color-primary);
-    color: white;
-  }
-
-  .btn-outline svg {
-    transition: transform 0.2s ease;
-  }
-
-  .btn-outline:hover svg {
-    transform: translateX(4px);
-  }
-
-  /* 제목 스타일 */
-  .title-uppercase {
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    font-weight: 800;
-  }
-
-  /* 필터 버튼 */
-  .filter-btn {
-    @apply px-5 py-2.5 rounded-full font-medium text-sm transition-all cursor-pointer border-none;
-  }
-
-  .filter-btn.active {
-    background: var(--color-primary);
-    color: white;
-  }
-
-  .filter-btn:not(.active) {
-    @apply bg-slate-100;
-    color: var(--color-text);
-  }
-
-  .filter-btn:not(.active):hover {
-    @apply bg-slate-200;
-  }
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
 }
 
 @layer base {
@@ -272,67 +81,288 @@
     color: var(--color-text);
   }
 
+  body {
+    @apply text-base leading-relaxed;
+  }
+
   h1, h2, h3, h4, h5, h6 {
     @apply font-semibold tracking-tight;
     color: var(--color-text);
   }
-}
 
-/* 반응형 Bento Grid */
-@media (max-width: 1024px) {
-  .bento-large { grid-column: span 6; grid-row: span 2; }
-  .bento-medium { grid-column: span 6; grid-row: span 2; }
-  .bento-small { grid-column: span 6; grid-row: span 1; }
-  .bento-wide { grid-column: span 6; grid-row: span 1; }
-  .bento-categories { grid-column: span 12; grid-row: span 1; }
-}
+  h1 { @apply text-4xl md:text-5xl; }
+  h2 { @apply text-3xl md:text-4xl; }
+  h3 { @apply text-2xl md:text-3xl; }
+  h4 { @apply text-xl md:text-2xl; }
 
-@media (max-width: 768px) {
-  .bento-grid {
-    grid-template-columns: 1fr;
+  a {
+    @apply transition-colors duration-200;
   }
-  .bento-large,
-  .bento-medium,
-  .bento-small,
-  .bento-wide,
-  .bento-categories {
-    grid-column: span 1;
-    grid-row: span 1;
+}
+
+@layer components {
+  /* 컨테이너 */
+  .container-blog {
+    @apply max-w-6xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* 섹션 헤더 */
+  .section-header {
+    @apply mb-10;
+  }
+
+  .section-title {
+    @apply text-3xl md:text-4xl font-bold text-primary mb-3;
+  }
+
+  .section-subtitle {
+    @apply text-lg text-text-secondary;
+  }
+
+  /* 카드 스타일 */
+  .card-base {
+    @apply bg-white rounded-2xl overflow-hidden transition-all duration-300;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .card-base:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .card-elevated {
+    @apply bg-white rounded-2xl overflow-hidden;
+    box-shadow: var(--shadow-md);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .card-elevated:hover {
+    box-shadow: var(--shadow-xl);
+    transform: translateY(-6px);
+  }
+
+  /* 피처드 카드 (히어로) */
+  .card-featured {
+    @apply relative rounded-3xl overflow-hidden;
+    aspect-ratio: 16 / 9;
+  }
+
+  .card-featured img {
+    @apply w-full h-full object-cover transition-transform duration-700;
+  }
+
+  .card-featured:hover img {
+    transform: scale(1.05);
+  }
+
+  .card-featured-overlay {
+    @apply absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent;
+  }
+
+  .card-featured-content {
+    @apply absolute bottom-0 left-0 right-0 p-6 md:p-10 text-white;
+  }
+
+  /* 포스트 카드 */
+  .post-card {
+    @apply bg-white rounded-2xl overflow-hidden flex flex-col h-full;
+    box-shadow: var(--shadow-sm);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .post-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+  }
+
+  .post-card-image {
+    @apply aspect-[4/3] w-full overflow-hidden bg-surface-secondary;
+  }
+
+  .post-card-image img {
+    @apply w-full h-full object-cover transition-transform duration-500;
+  }
+
+  .post-card:hover .post-card-image img {
+    transform: scale(1.05);
+  }
+
+  .post-card-content {
+    @apply p-5 flex flex-col flex-grow;
+  }
+
+  .post-card-title {
+    @apply text-lg font-semibold text-primary mb-2 line-clamp-2 group-hover:text-accent transition-colors;
+  }
+
+  .post-card-excerpt {
+    @apply text-sm text-text-secondary line-clamp-2 mb-4;
+  }
+
+  .post-card-meta {
+    @apply flex items-center gap-3 mt-auto text-sm text-text-muted;
+  }
+
+  /* 필터 탭 */
+  .filter-tabs {
+    @apply flex items-center gap-2 flex-wrap;
+  }
+
+  .filter-tab {
+    @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200 cursor-pointer;
+    @apply text-text-secondary hover:text-primary hover:bg-surface-secondary;
+  }
+
+  .filter-tab.active {
+    @apply bg-primary text-white;
+  }
+
+  .filter-tab-work.active { @apply bg-emerald-600; }
+  .filter-tab-family.active { @apply bg-amber-500; }
+  .filter-tab-life.active { @apply bg-indigo-600; }
+
+  /* 버튼 */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl font-medium transition-all duration-200;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white hover:bg-primary-light;
+  }
+
+  .btn-secondary {
+    @apply bg-surface-secondary text-primary hover:bg-border;
+  }
+
+  .btn-outline {
+    @apply border-2 border-border text-primary hover:border-primary hover:bg-primary hover:text-white;
+  }
+
+  .btn-ghost {
+    @apply text-text-secondary hover:text-primary hover:bg-surface-secondary;
+  }
+
+  .btn-link {
+    @apply text-accent hover:text-accent-light inline-flex items-center gap-1;
+  }
+
+  /* 네비게이션 */
+  .nav-link {
+    @apply text-text-secondary hover:text-primary font-medium transition-colors duration-200;
+  }
+
+  .nav-link.active {
+    @apply text-primary;
+  }
+
+  /* 페이지 헤더 */
+  .page-header {
+    @apply py-12 md:py-16 text-center;
+  }
+
+  .page-title {
+    @apply text-4xl md:text-5xl font-bold text-primary mb-4;
+  }
+
+  .page-description {
+    @apply text-lg text-text-secondary max-w-2xl mx-auto;
+  }
+
+  /* 그리드 레이아웃 */
+  .posts-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6;
+  }
+
+  .posts-grid-2col {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-6;
+  }
+
+  /* 프로필 카드 */
+  .profile-card {
+    @apply bg-white rounded-2xl p-6 md:p-8 flex flex-col md:flex-row items-center gap-6;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .profile-avatar {
+    @apply w-20 h-20 rounded-full bg-gradient-to-br from-indigo-400 to-pink-400 flex items-center justify-center text-white text-2xl font-bold;
+  }
+
+  /* 소셜 링크 */
+  .social-link {
+    @apply w-10 h-10 rounded-full bg-surface-secondary flex items-center justify-center text-text-secondary hover:bg-primary hover:text-white transition-all duration-200;
+  }
+
+  /* 푸터 */
+  .footer-link {
+    @apply text-text-secondary hover:text-primary transition-colors;
+  }
+
+  /* 애니메이션 */
+  .animate-fade-in {
+    animation: fadeIn 0.5s ease-out;
+  }
+
+  .animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out;
+  }
+
+  .animate-stagger > * {
+    animation: fadeInUp 0.5s ease-out backwards;
+  }
+
+  .animate-stagger > *:nth-child(1) { animation-delay: 0.1s; }
+  .animate-stagger > *:nth-child(2) { animation-delay: 0.2s; }
+  .animate-stagger > *:nth-child(3) { animation-delay: 0.3s; }
+  .animate-stagger > *:nth-child(4) { animation-delay: 0.4s; }
+  .animate-stagger > *:nth-child(5) { animation-delay: 0.5s; }
+  .animate-stagger > *:nth-child(6) { animation-delay: 0.6s; }
+
+  /* 레거시 호환 - 기존 카테고리 태그 */
+  .category-tag {
+    @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-medium transition-all duration-200;
+  }
+
+  .category-tag-work { @apply bg-emerald-50 text-emerald-700; }
+  .category-tag-family { @apply bg-amber-50 text-amber-700; }
+  .category-tag-life { @apply bg-indigo-50 text-indigo-700; }
+  .category-tag-blog { @apply bg-indigo-50 text-indigo-700; }
+  .category-tag-projects { @apply bg-pink-50 text-pink-700; }
+  .category-tag-marketing { @apply bg-violet-50 text-violet-700; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
 /* 스크롤바 */
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: var(--color-surface-secondary);
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #ccc;
+  background: var(--color-border);
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #999;
-}
-
-/* 애니메이션 */
-.page-transition {
-  animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  background: var(--color-text-muted);
 }
 
 /* 모바일 메뉴 */
@@ -350,7 +380,7 @@
 }
 
 .mobile-menu-content {
-  @apply absolute left-0 top-0 bottom-0 w-72 bg-white p-8;
+  @apply absolute left-0 top-0 bottom-0 w-72 bg-white p-6;
   transform: translateX(-100%);
   transition: transform 0.3s ease;
 }

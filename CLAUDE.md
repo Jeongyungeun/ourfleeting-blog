@@ -1,2 +1,7 @@
-- 전체적으로 깔끔한 디자인을 사용하고 전체적인 문체를 고려하여 유지해달라.
+- 전체적으로 깔끔한 디자인을 사용하고 전체적인 문체를 고려하고 유지해달라.
 - Work의 블로그는 약사 입장에서 고객에게 전하는 글이다.
+- 특히 Work에서 작성한 블로그 하단에 다음과 같은 링크를 첨부해줘
+ - 링크를 걸 텍스트 앞에 아이콘도 넣어줘.
+ - website :  https://jeongyungeun.github.io/mirinae_landing/
+ - google playstore : https://play.google.com/store/apps/details?id=com.likeflameyungun.mirinae_drug_frontend
+ - app stroe:

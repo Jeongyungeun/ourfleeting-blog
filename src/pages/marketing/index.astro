@@ -1,36 +1,55 @@
 ---
 import { getCollection } from "astro:content";
 import Layout from "../../layouts/Layout.astro";
-import Card from "../../components/Card.astro";
+import { Image } from "astro:assets";
+import FormattedDate from "../../components/FormattedDate.astro";
 
 const allPosts = (await getCollection("marketing")).sort(
 	(a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf(),
 );
 ---
 
-<Layout title="Marketing" description="마케팅 인사이트">
-	<section class="py-8">
-		<h1 class="text-4xl font-bold text-slate-900 mb-8 text-center">
-			마케팅
-		</h1>
+<Layout title="Marketing" description="마케팅 콘텐츠">
+	<div class="container-blog py-8 md:py-12">
+		<!-- Page Header -->
+		<div class="page-header">
+			<h1 class="page-title">Marketing</h1>
+			<p class="page-description">마케팅 전략과 인사이트를 공유합니다</p>
+		</div>
 
-		<p class="text-center text-slate-600 mb-10 max-w-2xl mx-auto">
-			마케팅 전략과 인사이트를 공유합니다.
-		</p>
+		<!-- Posts Grid -->
+		<div class="posts-grid animate-stagger">
+			{allPosts.map((post) => (
+				<a href={`/marketing/${post.id}/`} class="post-card group">
+					{post.data.heroImage && (
+						<div class="post-card-image">
+							<Image
+								src={post.data.heroImage}
+								alt={post.data.title}
+								width={600}
+								height={450}
+							/>
+						</div>
+					)}
+					<div class="post-card-content">
+						<div class="flex items-center gap-2 mb-3">
+							<span class="tag tag-marketing">Marketing</span>
+						</div>
+						<h3 class="post-card-title">{post.data.title}</h3>
+						<p class="post-card-excerpt">{post.data.description}</p>
+						<div class="post-card-meta">
+							<FormattedDate date={post.data.pubDate} />
+						</div>
+					</div>
+				</a>
+			))}
+		</div>
 
-		<!-- 포스트 목록 -->
-		<ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			{
-				allPosts.map((post) => (
-					<Card
-						title={post.data.title}
-						date={post.data.pubDate}
-						body={post.data.description}
-						href={`/marketing/${post.id}/`}
-						image={post.data.heroImage}
-					/>
-				))
-			}
-		</ul>
-	</section>
+		<!-- Empty State -->
+		{allPosts.length === 0 && (
+			<div class="text-center py-16">
+				<p class="text-text-secondary">아직 작성된 글이 없습니다.</p>
+			</div>
+		)}
+	</div>
 </Layout>
