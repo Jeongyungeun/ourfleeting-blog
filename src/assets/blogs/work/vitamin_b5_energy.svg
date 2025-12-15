@@ -1,0 +1,54 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="energyBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0" />
+      <stop offset="100%" stop-color="#FFE0B2" />
+    </linearGradient>
+    <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="0" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#EF6C00" />
+    </marker>
+  </defs>
+
+  <rect width="800" height="400" rx="20" ry="20" fill="url(#energyBg)" />
+  
+  <text x="400" y="50" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="28" fill="#E65100" text-anchor="middle">비타민 B5와 에너지 대사</text>
+  
+  <!-- Central Cycle -->
+  <g transform="translate(400, 220)">
+      <circle cx="0" cy="0" r="90" fill="none" stroke="#FF9800" stroke-width="4" stroke-dasharray="10 5" />
+      <text x="0" y="5" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#E65100" text-anchor="middle">TCA 회로</text>
+      <text x="0" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="12" fill="#E65100" text-anchor="middle">(에너지 생성)</text>
+      
+      <!-- Arrows pointing in -->
+      <line x1="-90" y1="-90" x2="-55" y2="-55" stroke="#EF6C00" stroke-width="4" marker-end="url(#arrowhead)"/>
+      <line x1="90" y1="-90" x2="55" y2="-55" stroke="#EF6C00" stroke-width="4" marker-end="url(#arrowhead)"/>
+      <line x1="0" y1="130" x2="0" y2="95" stroke="#EF6C00" stroke-width="4" marker-end="url(#arrowhead)"/>
+  </g>
+
+  <!-- Input Sources -->
+  <g transform="translate(150, 100)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#FFCC80"/>
+      <text x="0" y="5" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#3E2723" text-anchor="middle">탄수화물</text>
+  </g>
+
+  <g transform="translate(400, 80)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#FFCC80"/>
+      <text x="0" y="5" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#3E2723" text-anchor="middle">지방</text>
+  </g>
+  
+  <g transform="translate(650, 100)">
+      <rect x="-60" y="-30" width="120" height="60" rx="10" fill="#FFCC80"/>
+      <text x="0" y="5" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#3E2723" text-anchor="middle">단백질</text>
+  </g>
+  
+  <!-- CoA Molecule Representation -->
+  <g transform="translate(400, 220)">
+      <circle cx="-130" cy="0" r="35" fill="#FF5722" />
+      <text x="-130" y="5" font-family="Arial, sans-serif" font-weight="bold" font-size="14" fill="white" text-anchor="middle">CoA</text>
+      <line x1="-95" y1="0" x2="-90" y2="0" stroke="#FF5722" stroke-width="4" />
+      <text x="-130" y="-45" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="14" fill="#BF360C" text-anchor="middle">비타민 B5</text>
+  </g>
+  
+  <text x="400" y="360" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="18" fill="#BF360C" text-anchor="middle">"우리가 먹은 음식을 에너지로 바꾸는 열쇠"</text>
+
+</svg>

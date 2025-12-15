@@ -1,0 +1,43 @@
+<svg width="1200" height="675" viewBox="0 0 1200 675" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF3E0" />
+      <stop offset="100%" stop-color="#FFE0B2" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="15" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="675" fill="url(#bgGradient)" />
+
+  <!-- Abstract Shapes (Hexagons related to chemical structure) -->
+  <g opacity="0.1" fill="#FF9800">
+    <path d="M100 100 L150 130 L150 180 L100 210 L50 180 L50 130 Z" transform="scale(2) translate(50,50)" />
+    <path d="M100 100 L150 130 L150 180 L100 210 L50 180 L50 130 Z" transform="scale(1.5) translate(600, 200) rotate(30)" />
+    <path d="M100 100 L150 130 L150 180 L100 210 L50 180 L50 130 Z" transform="scale(2.5) translate(300, -50)" />
+  </g>
+  
+  <g opacity="0.3" fill="none" stroke="#FFB74D" stroke-width="2">
+     <circle cx="200" cy="500" r="150" />
+     <circle cx="1000" cy="100" r="200" />
+  </g>
+
+  <!-- Main Content Container -->
+  <g transform="translate(600, 337.5)" text-anchor="middle">
+    <!-- Circle Background -->
+    <circle cx="0" cy="0" r="160" fill="rgba(255, 255, 255, 0.6)" filter="url(#glow)" />
+    <circle cx="0" cy="0" r="140" fill="#fff" />
+    
+    <!-- Text -->
+    <text x="0" y="-20" font-family="Arial, sans-serif" font-weight="bold" font-size="80" fill="#EF6C00">B6</text>
+    <text x="0" y="40" font-family="Arial, sans-serif" font-size="24" fill="#F57C00" letter-spacing="2">PYRIDOXINE</text>
+    <text x="0" y="70" font-family="Arial, sans-serif" font-size="16" fill="#FB8C00">Metabolism &amp; Energy</text>
+  </g>
+
+  <!-- Decorative Wave -->
+  <path d="M0 600 Q 300 550 600 600 T 1200 600 V 675 H 0 Z" fill="#FFCC80" opacity="0.4" />
+  <path d="M0 620 Q 300 580 600 620 T 1200 620 V 675 H 0 Z" fill="#FFB74D" opacity="0.4" />
+</svg>

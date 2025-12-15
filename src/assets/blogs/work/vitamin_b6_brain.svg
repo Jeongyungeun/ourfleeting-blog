@@ -1,0 +1,44 @@
+<svg width="800" height="400" viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brainBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E1F5FE" />
+      <stop offset="100%" stop-color="#B3E5FC" />
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="400" rx="20" ry="20" fill="url(#brainBg)" />
+  
+  <text x="400" y="50" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="28" fill="#01579B" text-anchor="middle">비타민 B6와 신경전달물질</text>
+  
+  <!-- Brain Profile Silhouette -->
+  <path d="M250 150 C 250 100 300 80 350 80 C 420 80 450 120 450 180 C 450 250 400 300 350 300 L 330 350" fill="none" stroke="#0288D1" stroke-width="4" opacity="0.5"/>
+  
+  <!-- Connecting Links (Synapses) -->
+  <g transform="translate(350, 200)">
+      <circle cx="0" cy="0" r="140" fill="none" stroke="#4FC3F7" stroke-dasharray="5 5" />
+      
+      <!-- Serotonin -->
+      <g transform="translate(-80, -40)">
+        <circle cx="0" cy="0" r="35" fill="#FFF" stroke="#29B6F6" stroke-width="2"/>
+        <text x="0" y="0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#01579B">세로토닌</text>
+        <text x="0" y="15" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="10" text-anchor="middle" fill="#0277BD">(행복, 수면)</text>
+      </g>
+      
+      <!-- Dopamine -->
+      <g transform="translate(80, -40)">
+        <circle cx="0" cy="0" r="35" fill="#FFF" stroke="#29B6F6" stroke-width="2"/>
+        <text x="0" y="0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#01579B">도파민</text>
+        <text x="0" y="15" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="10" text-anchor="middle" fill="#0277BD">(성취감, 쾌락)</text>
+      </g>
+      
+      <!-- GABA -->
+      <g transform="translate(0, 80)">
+        <circle cx="0" cy="0" r="35" fill="#FFF" stroke="#29B6F6" stroke-width="2"/>
+        <text x="0" y="0" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="12" text-anchor="middle" fill="#01579B">GABA/가바</text>
+        <text x="0" y="15" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="10" text-anchor="middle" fill="#0277BD">(안정, 이완)</text>
+      </g>
+  </g>
+  
+  <text x="400" y="380" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="18" fill="#0277BD" text-anchor="middle">"내 기분을 조절하는 호르몬을 만드는 조력자"</text>
+
+</svg>

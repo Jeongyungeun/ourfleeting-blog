@@ -1,0 +1,98 @@
+<svg width="800" height="500" viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="chartBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFFDE7" />
+      <stop offset="100%" stop-color="#FFF9C4" />
+    </linearGradient>
+    <filter id="dropShadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="3"/>
+      <feOffset dx="2" dy="2" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge> 
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/> 
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" rx="20" ry="20" fill="url(#chartBg)" />
+  
+  <text x="400" y="60" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="28" fill="#F57F17" text-anchor="middle">비타민 B6 급원 식품</text>
+  <text x="400" y="90" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="16" fill="#F9A825" text-anchor="middle">(100g 또는 1회 섭취량 기준 함량)</text>
+
+  <!-- Chart Area -->
+  <script>
+    /* Data: 
+       Chickpeas: 1.1 mg
+       Chicken Breast: 0.9 mg
+       Tuna: 0.9 mg
+       Salmon: 0.8 mg
+       Potato: 0.4 mg
+       Banana: 0.4 mg
+       Spinach: 0.2 mg
+       Max value approx 1.2 mg for scaling
+       Width available approx 500px. Scale: 1mg = 400px
+    */
+  </script>
+  
+  <g transform="translate(150, 130)">
+  
+    <!-- Bar 1: 병아리콩 (1.1mg) -->
+    <g transform="translate(0, 0)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">병아리콩</text>
+      <rect x="0" y="5" width="440" height="30" rx="5" fill="#FDD835" filter="url(#dropShadow)" />
+      <text x="450" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#E65100">1.1 mg</text>
+      <!-- Icon hint -->
+      <circle cx="430" cy="20" r="8" fill="#FFF59D" opacity="0.5"/>
+    </g>
+
+    <!-- Bar 2: 닭가슴살 (0.9mg) -->
+    <g transform="translate(0, 50)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">닭가슴살</text>
+      <rect x="0" y="5" width="360" height="30" rx="5" fill="#FFE082" filter="url(#dropShadow)" />
+      <text x="370" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#E65100">0.9 mg</text>
+    </g>
+
+    <!-- Bar 3: 참치 (0.9mg) -->
+    <g transform="translate(0, 100)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">참치</text>
+      <rect x="0" y="5" width="360" height="30" rx="5" fill="#90CAF9" filter="url(#dropShadow)" />
+      <text x="370" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#1565C0">0.9 mg</text>
+    </g>
+    
+    <!-- Bar 4: 연어 (0.8mg) -->
+    <g transform="translate(0, 150)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">연어</text>
+      <rect x="0" y="5" width="320" height="30" rx="5" fill="#FFAB91" filter="url(#dropShadow)" />
+      <text x="330" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#D84315">0.8 mg</text>
+    </g>
+
+    <!-- Bar 5: 감자 (0.4mg) -->
+    <g transform="translate(0, 200)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">감자</text>
+      <rect x="0" y="5" width="160" height="30" rx="5" fill="#BCAAA4" filter="url(#dropShadow)" />
+      <text x="170" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#5D4037">0.4 mg</text>
+    </g>
+    
+    <!-- Bar 6: 바나나 (0.4mg) -->
+    <g transform="translate(0, 250)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">바나나</text>
+      <rect x="0" y="5" width="160" height="30" rx="5" fill="#FFF176" filter="url(#dropShadow)" />
+      <text x="170" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#F57F17">0.4 mg</text>
+    </g>
+    
+    <!-- Bar 7: 시금치 (0.2mg) -->
+    <g transform="translate(0, 300)">
+      <text x="-10" y="25" text-anchor="end" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#424242">시금치</text>
+      <rect x="0" y="5" width="80" height="30" rx="5" fill="#A5D6A7" filter="url(#dropShadow)" />
+      <text x="90" y="25" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-weight="bold" font-size="16" fill="#2E7D32">0.2 mg</text>
+    </g>
+    
+  </g>
+  
+  <text x="400" y="480" font-family="'Malgun Gothic', 'Apple SD Gothic Neo', sans-serif" font-size="14" fill="#757575" text-anchor="middle">*조리 방법에 따라 함량은 달라질 수 있습니다.</text>
+
+</svg>

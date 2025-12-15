@@ -3,13 +3,49 @@ import type { CollectionEntry } from "astro:content";
 import Layout from "./Layout.astro";
 import FormattedDate from "../components/FormattedDate.astro";
 import { Image } from "astro:assets";
+import { SITE_TITLE } from "../consts";
 
 type Props = CollectionEntry<"blog">["data"];
 
-const { title, description, pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description, pubDate, updatedDate, heroImage, tags = [] } = Astro.props;
+
+// JSON-LD 구조화 데이터
+const jsonLd = {
+	"@context": "https://schema.org",
+	"@type": "BlogPosting",
+	"headline": title,
+	"description": description,
+	"image": heroImage ? new URL(heroImage.src, Astro.site).toString() : undefined,
+	"datePublished": pubDate.toISOString(),
+	"dateModified": updatedDate ? updatedDate.toISOString() : pubDate.toISOString(),
+	"author": {
+		"@type": "Organization",
+		"name": SITE_TITLE,
+		"url": Astro.site
+	},
+	"publisher": {
+		"@type": "Organization",
+		"name": SITE_TITLE,
+		"url": Astro.site
+	},
+	"mainEntityOfPage": {
+		"@type": "WebPage",
+		"@id": Astro.url.toString()
+	},
+	"keywords": tags.join(", ")
+};
 ---
 
-<Layout title={title} description={description}>
+<Layout
+	title={title}
+	description={description}
+	image={heroImage}
+	type="article"
+	pubDate={pubDate}
+	updatedDate={updatedDate}
+	tags={tags}
+>
+	<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
 	<article class="max-w-3xl mx-auto">
 		<div class="mb-8">
 			{
